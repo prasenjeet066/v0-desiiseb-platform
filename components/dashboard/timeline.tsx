@@ -41,7 +41,7 @@ export function Timeline({ userId, refreshTrigger }: TimelineProps) {
 
       // First try the RPC function
       const { data: rpcData, error: rpcError } = await supabase.rpc("get_timeline_posts", {
-        user_id: 3,
+        user_id: user.id,
         limit_count: 20,
         offset_count: 0,
       })
