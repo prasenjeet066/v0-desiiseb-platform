@@ -122,7 +122,7 @@ export function ProfileContent({ username, currentUserId }: ProfileContentProps)
         setProfileData(profileWithStats)
 
         // Get user posts
-        const { data: postsData } = await supabase
+        /**const { data: postsData } = await supabase
           .from("posts")
           .select(`
             id,
@@ -136,7 +136,13 @@ export function ProfileContent({ username, currentUserId }: ProfileContentProps)
           `)
           .eq("user_id", profile.id)
           .order("created_at", { ascending: false })
-          .limit(20)
+          .limit(20)**/
+        const { data: postsData } = await supabase
+  .from("posts")
+  .select("*")
+  .eq("user_id", profile.id)
+  .order("created_at", { ascending: false })
+  .limit(20)
         //setData(data)
         // Get likes and reposts for posts
         const postIds = postsData?.map((p) => p.id) || []
