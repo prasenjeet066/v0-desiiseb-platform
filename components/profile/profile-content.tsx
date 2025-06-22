@@ -64,7 +64,7 @@ export function ProfileContent({ username, currentUserId }: ProfileContentProps)
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [editDialogOpen, setEditDialogOpen] = useState(false)
   const router = useRouter()
-
+  const[data,setData] = useState([])
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -132,19 +132,19 @@ export function ProfileContent({ username, currentUserId }: ProfileContentProps)
             reply_to,
             media_urls,
             media_type,
-            //profiles!inner(username, display_name, avatar_url)
+            profiles!inner(username, display_name, avatar_url)
           `)
           .eq("user_id", profile.id)
           .order("created_at", { ascending: false })
           .limit(20)
-
+        setData(data)
         // Get likes and reposts for posts
         const postIds = postsData?.map((p) => p.id) || []
         const [likesData, repostsData] = await Promise.all([
           supabase.from("likes").select("post_id, user_id").in("post_id", postIds),
           supabase.from("reposts").select("post_id, user_id").in("post_id", postIds),
         ])
-
+        
         const likesMap = new Map()
         const userLikesSet = new Set()
         const repostsMap = new Map()
@@ -403,12 +403,12 @@ export function ProfileContent({ username, currentUserId }: ProfileContentProps)
 
             {/* Posts */}
             <div>
-              {posts.length === 0 ? (
+              {data.length === 0 ? (
                 <div className="text-center py-8 text-gray-500">
                   <p>এখনো কোনো পোস্ট নেই</p>
                 </div>
               ) : (
-                posts.map((post) => (
+                data.map((post) => (
                   <PostCard
                     key={post.id}
                     post={post}
