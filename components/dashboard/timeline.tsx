@@ -41,7 +41,7 @@ export function Timeline({ userId, refreshTrigger }: TimelineProps) {
 
       // First try the RPC function
       const { data: rpcData, error: rpcError } = await supabase.rpc("get_timeline_posts", {
-        user_id: userId,
+        user_id: 3,
         limit_count: 20,
         offset_count: 0,
       })
@@ -60,7 +60,7 @@ export function Timeline({ userId, refreshTrigger }: TimelineProps) {
           reply_to,
           media_urls,
           media_type,
-          //profiles!inner(username, display_name, avatar_url)
+          profiles!inner(username, display_name, avatar_url)
         `)
           .order("created_at", { ascending: false })
           .limit(20)
