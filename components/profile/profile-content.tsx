@@ -132,7 +132,7 @@ export function ProfileContent({ username, currentUserId }: ProfileContentProps)
             reply_to,
             media_urls,
             media_type,
-            profiles!inner(username, display_name, avatar_url)
+            //profiles!inner(username, display_name, avatar_url)
           `)
           .eq("user_id", profile.id)
           .order("created_at", { ascending: false })
